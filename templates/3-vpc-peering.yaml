@@ -1,0 +1,64 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Template to build a peering connection between two VPCs
+
+# Parameters
+Parameters:
+  Project:
+    Type: String
+    Default: BIDMC TGW PoC
+  Environment:
+    Type: String
+    Default: Dev
+    AllowedValues:
+    - Dev
+    - Test
+    - Prod
+  VPCStackA:
+    Type: String
+    Default: bidmc-poc-vpc-a
+    Description: The stack name for the first VPC
+  VPCStackB:
+    Type: String
+    Default: bidmc-poc-vpc-b
+    Description: The stack name for the second VPC
+
+# Resources
+Resources:
+  VPCPeeringConnection:
+    Type: AWS::EC2::VPCPeeringConnection
+    Properties:
+      VpcId:
+        Fn::ImportValue: 
+          !Sub ${VPCStackA}-VPCID
+      PeerVpcId: 
+        Fn::ImportValue: 
+          !Sub ${VPCStackB}-VPCID
+      Tags:
+      - Key: Project
+        Value: !Ref Project
+      - Key: Environment
+        Value: !Ref Environment
+      - Key: Name
+        Value: bidmc-peering
+  PeerRouteA:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: 
+        Fn::ImportValue:
+          !Sub ${VPCStackA}-RouteTable
+      DestinationCidrBlock:
+        Fn::ImportValue:
+          !Sub ${VPCStackB}-VPCCIDR
+      VpcPeeringConnectionId: !Ref VPCPeeringConnection
+  PeerRouteB:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: 
+        Fn::ImportValue:
+          !Sub ${VPCStackB}-RouteTable
+      DestinationCidrBlock:
+        Fn::ImportValue:
+          !Sub ${VPCStackA}-VPCCIDR
+      VpcPeeringConnectionId: !Ref VPCPeeringConnection

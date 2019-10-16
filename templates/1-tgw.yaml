@@ -1,0 +1,63 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Template to build a transit gateway for BIDMC PoC
+
+# Parameters
+Parameters:
+  Project:
+    Type: String
+    Default: BIDMC TGW PoC
+  Environment:
+    Type: String
+    Default: Dev
+    AllowedValues:
+    - Dev
+    - Test
+    - Prod
+
+# Resources
+Resources:
+  # Transit Gateway
+  BIDMCTransitGateway:
+    Type: AWS::EC2::TransitGateway
+    Properties:
+      AmazonSideAsn: 65000
+      Description: "BIDMC Transit Gateway PoC"
+      AutoAcceptSharedAttachments: "disable"
+      DefaultRouteTableAssociation: "enable"
+      DnsSupport: "enable"
+      VpnEcmpSupport: "enable"
+      Tags:
+      - Key: Project
+        Value: !Ref Project
+      - Key: Environment
+        Value: !Ref Environment
+      - Key: Name
+        Value: bidmc-tgw
+  
+  # Route tables
+  BIDMCSpokeRouteTable:        
+    Type: AWS::EC2::TransitGatewayRouteTable
+    Properties: 
+      Tags: 
+      - Key: Project
+        Value: !Ref Project
+      - Key: Environment
+        Value: !Ref Environment
+      - Key: Name
+        Value: rtb-spokes
+      TransitGatewayId: !Ref BIDMCTransitGateway
+
+# Outputs
+Outputs:
+  TransitGatewayId:
+    Description: The ID of the Transit Gateway
+    Value: !Ref BIDMCTransitGateway
+    Export:
+      Name: !Sub ${AWS::StackName}-tgw-id
+  SpokeRouteTable:
+    Description: The ID of the spoke route table
+    Value: !Ref BIDMCSpokeRouteTable
+    Export:
+      Name: !Sub ${AWS::StackName}-rtb-spokes

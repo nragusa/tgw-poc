@@ -1,0 +1,9 @@
+[{
+        "ParameterKey": "VPCStackA",
+        "ParameterValue": "bidmc-poc-vpc-a"
+    },
+    {
+        "ParameterKey": "VPCStackB",
+        "ParameterValue": "bidmc-poc-vpc-b"
+    }
+]

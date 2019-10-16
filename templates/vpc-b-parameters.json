@@ -1,0 +1,25 @@
+[{
+        "ParameterKey": "VPCSubnetCidrBlock",
+        "ParameterValue": "10.251.0.0/16"
+    },
+    {
+        "ParameterKey": "PrivateSubnetCidrBlock1",
+        "ParameterValue": "10.251.0.0/24"
+    },
+    {
+        "ParameterKey": "PrivateSubnetCidrBlock2",
+        "ParameterValue": "10.251.1.0/24"
+    },
+    {
+        "ParameterKey": "PrivateSubnetCidrBlock3",
+        "ParameterValue": "10.251.2.0/24"
+    },
+    {
+        "ParameterKey": "AttachToTransitGateway",
+        "ParameterValue": "false"
+    },
+    {
+        "ParameterKey": "ConnectToSpokeVpc",
+        "ParameterValue": "false"
+    }
+]
