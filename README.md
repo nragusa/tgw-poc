@@ -18,20 +18,19 @@ we will simply create the Transit Gateway and route table with no attachments.
 2. Change into the `templates` directory.
 3. Run the following command:
 
+**Important!!** To make things easy, copy the commands below verbatim. Otherwise,
+you will need to update the parameters JSON files appropriately.
+
 ```bash
 aws cloudformation create-stack --stack-name bidmc-poc-tgw \
     --template-body file://1-tgw.yaml --region us-east-1
 ```
-
-Make sure to note the name of your stack. In the example above, it's: `bidmc-poc-tgw`. You will need this later!
 
 ### Step 2 - Deploy VPC A and VPC B
 
 Now we will stand up 2 VPCs, each with a single EC2 instance in them. Once complete, we will establish a peering
 connection between them.
 
-**Important!!** To make things easy, copy the commands below verbatim. Otherwise,
-you will need to update the parameters JSON files appropriately.
 
 1. From the `templates` directory, run the following to create VPC A:
 
