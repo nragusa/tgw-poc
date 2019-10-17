@@ -131,7 +131,7 @@ VPC A will look similar to:
 2. Click on the stack for VPC A. If you followed the steps above, this should be `bidmc-poc-vpc-a`.
 3. Click the **Update** button.
 4. With **Use current template** selected, click **Next**.
-5. Change the value of `ConnectToSharedVpc` to **true**.
+5. Change the value of `AttachToTransitGateway` to **true**.
 6. Change the value of `ConnectToSpokeVpc` to **true**.
 7. Click **Next**.
 8. Click **Next**.
